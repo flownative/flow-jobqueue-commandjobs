@@ -1,0 +1,17 @@
+Flownative:
+  JobQueue:
+    CommandJobs:
+      commandJobDispatcher:
+        commandHandlers: []
+
+# EXAMPLE:
+#        commandHandlers:
+#          'GitRepository':
+#            'FetchLatestCommitMetadata':
+#              commandHandlerClassName: 'Flownative\Beach\Domain\Context\GitRepository\GitRepositoryCommandHandler'
+#              commandHandlerMethodName: 'handleFetchLatestCommitMetadata'
+#              commandClassName: 'Flownative\Beach\Domain\Context\GitRepository\Command\FetchLatestCommitMetadata'
+#            'FetchRepositoryMetadata':
+#              commandHandlerClassName: 'Flownative\Beach\Domain\Context\GitRepository\GitRepositoryCommandHandler'
+#              commandHandlerMethodName: 'handleFetchRepositoryMetadata'
+#              commandClassName: 'Flownative\Beach\Domain\Context\GitRepository\Command\FetchRepositoryMetadata'

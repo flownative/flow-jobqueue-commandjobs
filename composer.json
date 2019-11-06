@@ -1,0 +1,22 @@
+{
+    "name": "flownative/jobqueue-commandjobs",
+    "type": "neos-package",
+    "description": "Command handler support for a Flow job queue",
+    "license": "MIT",
+    "support": {
+        "email": "support@flownative.com"
+    },
+    "require": {
+        "flowpack/jobqueue-common": "~3.0",
+        "flowpack/jobqueue-doctrine": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flownative\\JobQueue\\CommandJobs\\": "Classes"
+        }
+    },
+    "extra": {
+        "applied-flow-migrations": [
+        ]
+    }
+}
