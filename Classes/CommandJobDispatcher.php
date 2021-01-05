@@ -9,10 +9,10 @@ namespace Flownative\JobQueue\CommandJobs;
 
 use Flowpack\JobQueue\Common\Queue\QueueInterface;
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Log\PsrSystemLoggerInterface;
 use Neos\Flow\ObjectManagement\ObjectManagerInterface;
 use Neos\Flow\Property\PropertyMapper;
 use Neos\Flow\Property\PropertyMappingConfiguration;
+use Psr\Log\LoggerInterface;
 
 /**
  * Configurable dispatcher for jobs which run commands
@@ -35,7 +35,7 @@ class CommandJobDispatcher
 
     /**
      * @Flow\Inject
-     * @var PsrSystemLoggerInterface
+     * @var LoggerInterface
      */
     protected $logger;
 
