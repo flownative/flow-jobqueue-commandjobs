@@ -10,7 +10,7 @@
         "neos/flow": "^6.0 || ^7.0",
         "flowpack/jobqueue-common": "~3.0",
         "flowpack/jobqueue-doctrine": "~3.0",
-        "flownative/sentry": "0.*"
+        "flownative/sentry": "1.*"
     },
     "autoload": {
         "psr-4": {
