@@ -60,10 +60,6 @@ class CommandJobDispatcher
     {
         $this->logger->debug(sprintf('CommandJobDispatcher: dispatching job %s', $job->getLabel()));
 
-        if ($sentryClient = self::getSentryClient()) {
-            $sentryClient->captureMessage('Test message', Severity::info());
-        }
-
         $queueName = $queue->getName();
         $commandType = $job->getCommandType();
 
