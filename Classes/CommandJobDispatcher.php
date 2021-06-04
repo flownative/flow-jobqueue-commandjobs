@@ -7,12 +7,14 @@ namespace Flownative\JobQueue\CommandJobs;
  * (c) Flownative GmbH - www.flownative.com
  */
 
+use Flownative\Sentry\SentryClientTrait;
 use Flowpack\JobQueue\Common\Queue\QueueInterface;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\ObjectManagement\ObjectManagerInterface;
 use Neos\Flow\Property\PropertyMapper;
 use Neos\Flow\Property\PropertyMappingConfiguration;
 use Psr\Log\LoggerInterface;
+use Sentry\Severity;
 
 /**
  * Configurable dispatcher for jobs which run commands
@@ -21,6 +23,8 @@ use Psr\Log\LoggerInterface;
  */
 class CommandJobDispatcher
 {
+    use SentryClientTrait;
+
     /**
      * @Flow\Inject
      * @var ObjectManagerInterface
@@ -56,6 +60,10 @@ class CommandJobDispatcher
     {
         $this->logger->debug(sprintf('CommandJobDispatcher: dispatching job %s', $job->getLabel()));
 
+        if ($sentryClient = self::getSentryClient()) {
+            $sentryClient->captureMessage('Test message', Severity::info());
+        }
+
         $queueName = $queue->getName();
         $commandType = $job->getCommandType();
 
@@ -85,6 +93,9 @@ class CommandJobDispatcher
             $command = $this->propertyMapper->convert($job->getPayload(), $commandClassName, $propertyMappingConfiguration);
         } catch (\Exception $e) {
             $this->logger->error(sprintf('CommandJobDispatcher: failed dispatching command of type %s; an exception occurred during property mapping: %s', $commandType, $e->getMessage()));
+            if ($sentryClient = self::getSentryClient()) {
+                $sentryClient->captureThrowable($e);
+            }
             return false;
         }
 
@@ -94,6 +105,12 @@ class CommandJobDispatcher
             return true;
         } catch (\Throwable $e) {
             $this->logger->error(sprintf('CommandJobDispatcher: failed dispatching command of type %s; an exception occurred during execution: %s', $commandType, $e->getMessage()));
+            if ($sentryClient = self::getSentryClient()) {
+                $sentryClient->captureThrowable($e, [
+                    'queue' => $queue->getName(),
+                    'job' => $job->getLabel()
+                ]);
+            }
             return false;
         }
     }
