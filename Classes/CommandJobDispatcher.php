@@ -86,6 +86,8 @@ class CommandJobDispatcher
             $propertyMappingConfiguration = new PropertyMappingConfiguration();
             $propertyMappingConfiguration->allowAllProperties();
             $propertyMappingConfiguration->forProperty('*')->allowAllProperties();
+            $propertyMappingConfiguration->forProperty('*')->forProperty('*')->allowAllProperties();
+            $propertyMappingConfiguration->forProperty('*')->forProperty('*')->forProperty('*')->allowAllProperties();
             $command = $this->propertyMapper->convert($job->getPayload(), $commandClassName, $propertyMappingConfiguration);
         } catch (\Exception $e) {
             $this->logger->error(sprintf('CommandJobDispatcher: failed dispatching command of type %s; an exception occurred during property mapping: %s', $commandType, $e->getMessage()));
