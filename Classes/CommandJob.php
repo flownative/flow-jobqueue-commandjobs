@@ -11,6 +11,7 @@ namespace Flownative\JobQueue\CommandJobs;
 use Flowpack\JobQueue\Common\Job\JobInterface;
 use Flowpack\JobQueue\Common\Queue\Message;
 use Flowpack\JobQueue\Common\Queue\QueueInterface;
+use JsonSerializable;
 use Neos\Flow\Annotations as Flow;
 
 /**
@@ -38,10 +39,10 @@ class CommandJob implements JobInterface
      * TopicBasedJob constructor.
      *
      * @param string $commandType
-     * @param array $payload
+     * @param mixed $payload
      * @throws InvalidPayloadException
      */
-    public function __construct(string $commandType, array $payload)
+    public function __construct(string $commandType, $payload)
     {
         $this->commandType = $commandType;
         try {
