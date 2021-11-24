@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Flownative\JobQueue\CommandJobs;
 
 /*
@@ -14,7 +15,6 @@ use Neos\Flow\ObjectManagement\ObjectManagerInterface;
 use Neos\Flow\Property\PropertyMapper;
 use Neos\Flow\Property\PropertyMappingConfiguration;
 use Psr\Log\LoggerInterface;
-use Sentry\Severity;
 
 /**
  * Configurable dispatcher for jobs which run commands

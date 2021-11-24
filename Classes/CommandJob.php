@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Flownative\JobQueue\CommandJobs;
 
 /*
@@ -38,11 +39,16 @@ class CommandJob implements JobInterface
      *
      * @param string $commandType
      * @param array $payload
+     * @throws InvalidPayloadException
      */
     public function __construct(string $commandType, array $payload)
     {
         $this->commandType = $commandType;
-        $this->payload = json_encode($payload, JSON_THROW_ON_ERROR, 512);
+        try {
+            $this->payload = json_encode($payload, JSON_THROW_ON_ERROR, 512);
+        } catch (\JsonException $e) {
+            throw new InvalidPayloadException(sprintf('The payload could not be serialized to JSON: %s', $e->getMessage()), 1637745901, $e);
+        }
     }
 
     /**
@@ -73,9 +79,14 @@ class CommandJob implements JobInterface
 
     /**
      * @return array
+     * @throws InvalidPayloadException
      */
     public function getPayload(): array
     {
-        return json_decode($this->payload, true, 512, JSON_THROW_ON_ERROR);
+        try {
+            return json_decode($this->payload, true, 512, JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+            throw new InvalidPayloadException(sprintf('The payload could not be deserialized from JSON: %s', $e->getMessage()), 1637745941, $e);
+        }
     }
 }
