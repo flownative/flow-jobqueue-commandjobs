@@ -7,7 +7,7 @@
         "email": "support@flownative.com"
     },
     "require": {
-        "neos/flow": "^6.0 || ^7.0",
+        "neos/flow": "^6.0 || ^7.0 || ^8.0",
         "flowpack/jobqueue-common": "~3.0",
         "flowpack/jobqueue-doctrine": "~3.0",
         "flownative/sentry": "1.*"
